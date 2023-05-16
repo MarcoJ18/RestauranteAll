@@ -7,6 +7,7 @@ import Registro from './views/Registro';
 import Ordenes from './views/Ordenes';
 import AdminLayout from './layouts/AdminLayout';
 import Productos from './views/Productos';
+import User from './views/User';
 
 const router = createBrowserRouter([
     {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
             {
                 path: '/auth/register',
                 element: <Registro/>
+            },
+            {
+                path: '/auth/user',
+                element: <User/>
             }
         ]
     },
@@ -47,7 +52,7 @@ const router = createBrowserRouter([
                 element: <Productos/>
             }
         ]
-    }
+    },
 ]);
 
 export default router;

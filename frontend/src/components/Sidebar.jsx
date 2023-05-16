@@ -1,39 +1,46 @@
 import useQuiosco from "../hooks/useQuiosco"
-import Categoria from "./Categoria"
 import { useAuth } from "../hooks/useAuth"
+import Hamburger from "./Hamburger";
+import Menu from "./Menu";
 
 
 export default function Sidebar() {
 
-  const {categorias} = useQuiosco()
-  const {logout,user} = useAuth({middleware: 'auth'});
+  const {hamburgerOpen,toogleHamburger} = useQuiosco()
+  const {logout,user,updateMesa} = useAuth({middleware: 'authUser'});
 
   return (
-    <aside className="md:w-72">
+    <aside className="md:w-72 flex items-center justify-around fixed md:static top-0 w-full bg-white md:block">
       <div className="p-4">
         <img 
-            className="w-40"
+            className="w-10 md:w-40 m-auto"
             src="img/logo.png" 
             alt="img-logo" 
         />
       </div>
-      <p className="my-10 text-xl text-center">Hola: {user?.name}</p>
-      <div className="mt-10">
-        {categorias.map(categoria => (
-            <Categoria
-              key={categoria.id}
-              categoria={categoria}
-            />
-        ))}
+      <p className="my-1 text-xl text-center">Mesa: {user?.mesa}</p>
+      <p className="my-1 text-xl text-center">Usuario: {user?.nombre}</p>
+      <p className="my-1 text-xl text-center bg-black text-white">{user?.admin}</p>
+      <div className="md:mt-3 hidden md:block">
+        <Menu/>
       </div>
-      <div className="mt-5">
+      <div className="md:mt-5">
           <button
             type="button"
             className="text-center bg-red-500 w-full p-3 font-bold text-white truncate"
-            onClick={logout}
+            onClick={()=>{
+              updateMesa(user?.id);
+              logout(user?.id);
+            }}
           >
             Cancelar Orden
           </button>
+      </div>
+      <div       
+        onClick={toogleHamburger}
+        className="block md:hidden"
+      >
+        <Hamburger/>
       </div>
 
     </aside>

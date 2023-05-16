@@ -7,7 +7,7 @@ import Resumen from '../components/Resumen'
 import ModalProducto from '../components/ModalProducto'
 import useQuiosco from '../hooks/useQuiosco'
 import { useAuth } from '../hooks/useAuth'
-
+import ModalResumen from '../components/ModalResumen'
 
 const customStyles = {
   content: {
@@ -27,15 +27,15 @@ export default function Layouts() {
   
   useAuth({middleware: 'auth'})
 
-  const { modal } = useQuiosco()
+  const { modal , modalResumen} = useQuiosco()
 
 
 
   return (
     <>
-      <div className='md:flex'>
+      <div className='md:flex '>
         <Sidebar/>
-        <main className='flex-1 h-screen overflow-y-scroll bg-gray-100 p-3'>
+        <main className='flex-1 w-full h-screen bg-gray-100 p-3 mt-20 md:mt-0'>
           <Outlet/>
         </main>
         <Resumen/>
@@ -43,6 +43,9 @@ export default function Layouts() {
       
         <Modal isOpen={modal} style={customStyles}>
             <ModalProducto/>
+        </Modal>
+        <Modal isOpen={modalResumen}>
+          <ModalResumen/>
         </Modal>
 
         <ToastContainer/>

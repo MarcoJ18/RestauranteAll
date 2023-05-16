@@ -12,6 +12,9 @@ const QuioscoProvider = ({children}) =>{
     const [producto, setProducto] = useState({});
     const [pedido, setPedido] = useState([]);
     const [total, setTotal] = useState(0);
+    const [hamburgerOpen, setHamburgerOpen] = useState(false);
+    const [modalResumen, setModalResumen] = useState(false);
+
 
     useEffect(() => {
         const nuevoTotal = pedido.reduce((total, producto) => (producto.precio * producto.cantidad) + total, 0);
@@ -19,13 +22,14 @@ const QuioscoProvider = ({children}) =>{
     },[pedido]);
 
     const obtenerCategorias = async () => {
-        const token = localStorage.getItem("AUTH_TOKEN");
+        //const token = localStorage.getItem("AUTH_TOKEN");
         try {
-            const {data} = await clienteAxios('/api/categorias',{
+        /*    const {data} = await clienteAxios('/api/categorias',{
                 headers:{
                     Authorization: `Bearer ${token}`
                 }
-            });
+            });*/
+            const {data} = await clienteAxios('/api/categorias');
             setCategorias(data.data);
             setCategoriaActual(data.data[0]);
         } catch (error) {
@@ -69,6 +73,16 @@ const QuioscoProvider = ({children}) =>{
         const productoActualizado = pedido.filter(producto => producto.id === id)[0];
         setProducto(productoActualizado);
         setModal(!modal);
+        
+
+    }
+
+    const handleCambiarCantidadResponsive = id =>{
+        const productoActualizado = pedido.filter(producto => producto.id === id)[0];
+        setProducto(productoActualizado);
+        setModal(!modal);
+        setModalResumen(modal);
+
     }
 
     const hadleEliminarProductoPedido = id =>{
@@ -77,7 +91,8 @@ const QuioscoProvider = ({children}) =>{
         toast.success('Eliminado exitosamente');
     }
 
-    const handleSumbitNuevaOrden = async (logout) =>{
+    const handleSumbitNuevaOrden = async (logout,updateMesa,user) =>{
+
         const token = localStorage.getItem('AUTH_TOKEN');
         try {
             const {data} = await clienteAxios.post('/api/pedidos', {
@@ -101,6 +116,7 @@ const QuioscoProvider = ({children}) =>{
             //Cerrar sesion del usuario
             setTimeout(() =>{
                localStorage.removeItem('AUTH_TOKEN');
+               updateMesa(user?.id);
                logout();
             },3000)
         } catch(error){
@@ -108,18 +124,24 @@ const QuioscoProvider = ({children}) =>{
         }
     }
 
-    const handleClickCompletarPedido = async (id) =>{
+    const handleClickCompletarPedido = async (id,idMesa) =>{
+
         const token = localStorage.getItem('AUTH_TOKEN');
         try {
+            toast.success('Pedido completado...');
             await clienteAxios.put(`api/pedidos/${id}`,null,{
                 headers:{
                     Authorization: `Bearer ${token}`
                 }
             });
+            await clienteAxios.put(`api/mesas/update/${idMesa}`,null);
+
+
         } catch (error) {
             console.log(error);
             
         }
+            
     }
 
     
@@ -136,6 +158,17 @@ const QuioscoProvider = ({children}) =>{
             
         }
     }
+
+    const toogleHamburger = () => {
+        setHamburgerOpen(!hamburgerOpen);
+      }
+
+
+    const handleClickModalResumen = () =>{
+        setModalResumen(!modalResumen);
+    }
+  
+
 
     return(
         <QuioscoContext.Provider
@@ -154,7 +187,13 @@ const QuioscoProvider = ({children}) =>{
                 total,
                 handleSumbitNuevaOrden,
                 handleClickCompletarPedido,
-                handleClickProductoAgotado
+                handleClickProductoAgotado,
+                hamburgerOpen,
+                toogleHamburger,
+                modalResumen,
+                handleClickModalResumen,
+                handleCambiarCantidadResponsive
+                
 
             }}
         

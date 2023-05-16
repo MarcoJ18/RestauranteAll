@@ -236,7 +236,7 @@ class ProductoSeeder extends Seeder
             array( 
                 'nombre' =>  "Paquete de 3 Variadas",
                 'precio' => 39.9,
-                'imagen' => "Donuts_11",
+                'imagen' => "donuts_11",
                 'categoria_id' => 4,
                 'disponible' => true,
                 'created_at' => Carbon::now(),

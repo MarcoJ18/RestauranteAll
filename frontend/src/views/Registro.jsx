@@ -12,7 +12,7 @@ export default function Registro() {
   const passwordConfirmRef = createRef();
 
   const [errores,setErrores] = useState([]);
-  const {register} = useAuth({middleware: 'guest', url:'/'});
+  const {register} = useAuth({middleware: 'guest', url:'/auth/login'});
 
   const handleSubmit = async(e) => {
     e.preventDefault();//prevenir la acción por defecto del navegador

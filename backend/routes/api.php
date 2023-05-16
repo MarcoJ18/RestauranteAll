@@ -5,7 +5,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\MesasController;
 use App\Http\Controllers\PedidoController;
+use App\Http\Controllers\UpdateMesasController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,14 +30,20 @@ Route::middleware('auth:sanctum')->group(function(){
     //Almacenar ordenes
 
     Route::apiResource('/pedidos', PedidoController::class);
-    Route::apiResource('/categorias', CategoriaController::class);
-    Route::apiResource('/productos', ProductoController::class);
+
+
 });
 
 
 
+Route::apiResource('/productos', ProductoController::class);
+Route::apiResource('/categorias', CategoriaController::class);
+
 
 //Autenticacion
+
+Route::apiResource('/mesas', MesasController::class);
+Route::apiResource('/mesas/update',UpdateMesasController::class);
 
 Route::post('/register',[AuthController::class, 'register']);
 Route::post('/login',[AuthController::class, 'login']);

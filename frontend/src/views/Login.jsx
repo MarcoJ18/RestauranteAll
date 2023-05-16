@@ -10,9 +10,9 @@ export default function Login() {
   const passwordRef = createRef();
 
   const [errores,setErrores] = useState([]);
-  const { login } = useAuth({
+  const { login} = useAuth({
     middleware: 'guest',
-    url: '/'
+    url: '/admin'
   });
 
 
@@ -21,20 +21,22 @@ export default function Login() {
   
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
-
     
-    login({email,password},setErrores);
+    login({email,password},setErrores)
 
   }
 
 
   return (
     <>
+    <div className='mt-24'>
+
       <h1 className='text-4xl font-black'>Inciar Sesión</h1>
       <p>Inicie sessión con su cuenta</p>
 
       <div className='bg-white shadow-md rounded-md mt-10 px-5 py-10'>
-        <form 
+        <form
+        
           onSubmit={handleSubmit}
           noValidate
         >
@@ -67,20 +69,21 @@ export default function Login() {
               ref={passwordRef}
             />
           </div>
-          <input 
+          <input
             type="submit" 
             value="Iniciar Sesión" 
             className='bg-indigo-600 hover:bg-indigo-800 text-white w-full mt-5 p-3 uppercase font-bold cursor-pointer'
           />
         </form>
       </div>
-
       <nav className="mt-5">
         <Link to="/auth/register">
           ¿No tienes cuenta? Crea una cuenta
         </Link>
       </nav>
 
+    </div>
     </>
+    
   )
 }

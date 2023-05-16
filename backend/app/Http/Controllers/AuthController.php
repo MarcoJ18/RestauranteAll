@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\MesaRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\RegistroRequest;
+use App\Models\Mesas;
 
 class AuthController extends Controller
 {
@@ -59,10 +61,13 @@ class AuthController extends Controller
     }
     public function logout(Request $request){
         $user = $request->user();
+        
         $user->currentAccessToken()->delete();
 
         return [
-            'user' => null
+            $user = null
         ];
+
     }
+
 }

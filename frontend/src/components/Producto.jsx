@@ -8,11 +8,11 @@ export default function Productos({producto, botonAgregar = false , botonDisponi
     const { nombre , imagen , precio} = producto;
   
     return (
-    <div className="border p-3 shadow bg-white">
+    <div className="border p-5 shadow bg-white flex flex-row md:flex-col">
       <img 
         src={`/img/${imagen}.jpg`} 
         alt={`imagen ${nombre}`}
-        className="w-full"
+        className="md:w-full w-1/3 object-contain"
       />
 
       <div className="p-5">

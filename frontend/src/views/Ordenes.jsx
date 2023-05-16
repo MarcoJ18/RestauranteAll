@@ -24,7 +24,7 @@ export default function Ordenes() {
     <div>
       <h1 className="text-4xl font-black">Ordenes</h1>
       <p className="text-2xl my-10">Administrador las ordenes desde aqui</p>
-      <div className="grid grid-cols-2 gap-5">
+      <div className="grid md:grid-cols-2 gap-5">
         {data.data.data.map((pedido) => (
           <div
             key={pedido.id}
@@ -49,7 +49,11 @@ export default function Ordenes() {
 
             <p className="text-lg font-bold text-slate-600">
               Cliente: {""}
-              <span className="font-normal">{pedido.user.name}</span>
+              <span className="font-normal">{pedido.mesas.nombre}</span>
+            </p>
+            <p className="text-lg font-bold text-slate-600">
+              Mesa: {""}
+              <span className="font-normal">{pedido.mesas.mesa}</span>
             </p>
 
             <p className="text-lg font-bold text-amber-600">
@@ -60,7 +64,7 @@ export default function Ordenes() {
             </p>
 
             <button
-              onClick={() => handleClickCompletarPedido(pedido.id)}
+              onClick={() => handleClickCompletarPedido(pedido.id,pedido.mesas.id)}
               type="submit"
               className="bg-indigo-600 hover:bg-indigo-800 cursor-pointer px-5 py-2 rounded uppercase font-bold text-white text-center w-full"
             >

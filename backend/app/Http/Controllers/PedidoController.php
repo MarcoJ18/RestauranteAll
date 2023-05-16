@@ -18,7 +18,7 @@ class PedidoController extends Controller
      */
     public function index()
     {
-        return new PedidoCollection(Pedido::with('user')->with('productos')->where('estado',0)->get());
+        return new PedidoCollection(Pedido::with('mesas')->with('productos')->where('estado',0)->get());
     }
 
     /**
@@ -31,7 +31,7 @@ class PedidoController extends Controller
     {
         // Almacenar una orden
         $pedido = new Pedido();
-        $pedido->user_id = Auth::user()->id;
+        $pedido->mesas_id = Auth::user()->id;
         $pedido->total = $request->total;
         $pedido->save();
 
